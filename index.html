@@ -1,74 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>CRust Converter</title>
+<title>CRust AI Converter</title>
 
 <style>
 body{
-    font-family: Arial, sans-serif;
-    background:#1e1e1e;
-    color:white;
-    text-align:center;
-}
-
-h1{
-    color:#00ffcc;
+background:#0f172a;
+color:white;
+font-family:Arial;
+text-align:center;
 }
 
 .container{
-    width:80%;
-    margin:auto;
+width:90%;
+margin:auto;
 }
 
 textarea{
-    width:45%;
-    height:250px;
-    margin:10px;
-    padding:10px;
-    background:#2d2d2d;
-    color:white;
-    border:1px solid #555;
+width:45%;
+height:350px;
+background:#111827;
+color:#00ffcc;
+border:1px solid #333;
+padding:10px;
+font-family:monospace;
 }
 
 button{
-    padding:12px 20px;
-    background:#00ffcc;
-    border:none;
-    font-size:16px;
-    cursor:pointer;
+padding:12px 20px;
+background:#22c55e;
+border:none;
+font-size:16px;
+cursor:pointer;
+margin:10px;
+}
+
+h1{
+color:#38bdf8;
 }
 </style>
 </head>
 
 <body>
 
-<h1>C → Rust Code Converter</h1>
+<h1>CRust AI Converter</h1>
+<p>C ↔ Rust Smart Code Translator</p>
 
 <div class="container">
 
-<textarea id="cCode" placeholder="Paste C code here"></textarea>
+<textarea id="inputCode" placeholder="Paste C or Rust code here"></textarea>
 
-<textarea id="rustCode" placeholder="Rust output will appear here"></textarea>
+<textarea id="outputCode" placeholder="Converted code appears here"></textarea>
 
 <br>
 
-<button onclick="convertCode()">Convert</button>
+<button onclick="convertToRust()">C → Rust</button>
+<button onclick="convertToC()">Rust → C</button>
+<button onclick="copyCode()">Copy Output</button>
 
 </div>
 
 <script>
-function convertCode(){
 
-let code=document.getElementById("cCode").value;
+function convertToRust(){
 
-let converted = code
-.replace(/printf/g,"println!")
-.replace(/int main/g,"fn main")
-.replace(/;/g,";");
+let code=document.getElementById("inputCode").value;
 
-document.getElementById("rustCode").value = converted;
+code=code.replace(/printf/g,"println!");
+code=code.replace(/int main/g,"fn main");
+code=code.replace(/#include <stdio.h>/g,"");
+
+document.getElementById("outputCode").value=code;
 
 }
+
+function convertToC(){
+
+let code=document.getElementById("inputCode").value;
+
+code=code.replace(/println!/g,"printf");
+code=code.replace(/fn main/g,"int main");
+
+document.getElementById("outputCode").value=code;
+
+}
+
+function copyCode(){
+
+let text=document.getElementById("outputCode");
+
+text.select();
+document.execCommand("copy");
+
+alert("Code Copied!");
+
+}
+
 </script>
 
 </body>
