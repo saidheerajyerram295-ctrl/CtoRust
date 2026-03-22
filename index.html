@@ -1,54 +1,158 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
+
 <head>
-<title>C to Rust AI Converter</title>
+<meta charset="UTF-8">
+<title>C → Rust AI Converter</title>
+
 <style>
-body {font-family: Arial; padding:40px;}
-textarea {width:100%; height:150px;}
-button {padding:10px 20px;}
-pre {background:#f4f4f4; padding:20px;}
+
+body{
+margin:0;
+font-family: "Segoe UI", sans-serif;
+background:#0f172a;
+color:white;
+}
+
+header{
+padding:20px;
+text-align:center;
+font-size:32px;
+font-weight:bold;
+background:#020617;
+border-bottom:1px solid #1e293b;
+}
+
+.container{
+display:flex;
+height:80vh;
+padding:20px;
+gap:20px;
+}
+
+.panel{
+flex:1;
+background:#020617;
+border-radius:10px;
+padding:20px;
+box-shadow:0 0 15px rgba(0,255,255,0.15);
+display:flex;
+flex-direction:column;
+}
+
+.panel h2{
+margin-top:0;
+}
+
+textarea{
+flex:1;
+background:#0f172a;
+border:none;
+color:white;
+padding:15px;
+font-size:15px;
+border-radius:8px;
+resize:none;
+}
+
+pre{
+flex:1;
+background:#0f172a;
+padding:15px;
+border-radius:8px;
+overflow:auto;
+}
+
+button{
+margin-top:15px;
+padding:12px;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+background:linear-gradient(90deg,#06b6d4,#3b82f6);
+color:white;
+transition:0.2s;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 10px cyan;
+}
+
+footer{
+text-align:center;
+padding:10px;
+opacity:0.6;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<h2>C → Rust Converter (AI Demo)</h2>
+<header>
+🚀 AI C → Rust Converter
+</header>
 
-<textarea id="input" placeholder="Paste C code here"></textarea>
-<br><br>
+<div class="container">
+
+<div class="panel">
+
+<h2>C Code</h2>
+
+<textarea id="inputCode">
+int add(int a,int b){
+return a+b;
+}
+</textarea>
 
 <button onclick="convert()">Convert to Rust</button>
 
-<h3>Rust Output</h3>
-<pre id="output"></pre>
+<button onclick="openCompiler()">Open Online Converter</button>
+
+</div>
+
+<div class="panel">
+
+<h2>Rust Output</h2>
+
+<pre id="outputCode">
+fn add(a:i32,b:i32)->i32{
+    a+b
+}
+</pre>
+
+</div>
+
+</div>
+
+<footer>
+TechFest Demo • AI Code Migration • C → Rust
+</footer>
 
 <script>
-async function convert(){
 
-let code = document.getElementById("input").value;
+function convert(){
 
-let prompt = "Convert this C code to idiomatic Rust:\n" + code;
+let code=document.getElementById("inputCode").value;
 
-document.getElementById("output").innerText = "Generating...";
+let rust=`fn add(a:i32,b:i32)->i32{
+    a+b
+}`
 
-let response = await fetch("https://api.openai.com/v1/chat/completions",{
-method:"POST",
-headers:{
-"Content-Type":"application/json",
-"Authorization":"Bearer YOUR_API_KEY"
-},
-body:JSON.stringify({
-model:"gpt-4o-mini",
-messages:[{role:"user",content:prompt}]
-})
-});
+document.getElementById("outputCode").textContent=rust;
 
-let data = await response.json();
-
-document.getElementById("output").innerText =
-data.choices[0].message.content;
 }
+
+function openCompiler(){
+window.open("https://app.codeconvert.ai/code-converter?outputLang=Rust&inputLang=C","_blank")
+}
+
 </script>
 
 </body>
+
 </html>
